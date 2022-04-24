@@ -1,0 +1,103 @@
+% Givens
+h = 6; s = 11; F = 1; w = 0.375; d = 0.375; A = w*d;
+lab = 7.126; lac = 10.35; lbc = 6.6; lbd = 11.0;
+lcd = lbc; lde = lab; lce = lac;
+theta = atand((2*h)/s);
+Soak = 6800;
+k = 0.5;
+E = 1.8e6;
+tauavg = 1252;
+
+% Tensile forces
+Tab = -F/(2*sind(theta));
+Tac = (F*cosd(theta))/(2*sind(theta));
+Tbc = 0;
+Tbd = -(F*cosd(theta))/(2*sind(theta));
+Tcd = 0;
+Tce = Tac + cosd(theta)*((-F-2*Tab*sind(theta))/sind(theta));
+Tde = -F/(2*sind(theta));
+
+
+% Tensiles stresses
+Stress = [Tab Tac Tbc Tbd Tcd Tce Tde]./A;
+
+
+% Length of the members in shear with the glue
+lab_s = 0.15*lab; lac_s = 0.15*lac; lbc_s = 0.15*lbc; lbd_s = 0.15*lbd;
+lcd_s = lbc_s; lde_s = lab_s; lce_s = lac_s;
+
+% Area in which the members are in shear with the glue
+Aab_s = lab_s*w; Aac_s = lac_s*w; Abc_s = lbc_s*w; Abd_s = lbd_s*w;
+Acd_s = lcd_s*w; Ade_s = lde_s*w; Ace_s = lce_s*w;
+
+% Shear stress values
+tauAB = Tab/(2*Aab_s); tauAC = Tac/(2*Aac_s); tauBC = Tbc/(2*Abc_s); 
+tauBD = Tbd/(2*Abd_s); tauCD = Tcd/(2*Acd_s); tauDE = Tde/(2*Ade_s);
+tauCE = Tce/(2*Ace_s);
+
+ShearStress = [tauAB tauAC tauBC tauBD tauCD tauCE tauDE];
+
+% Fmax1 = (tauavg)/(max(abs(ShearStress(:))));
+% Fmax2 = (Soak)/(max(abs(Stress(:))));
+% Fmax = min(Fmax1,Fmax2);
+
+% SFstressnew = (Soak)/(max(abs(Stress(:)))*Fmax);
+% SFshearnew = (tauavg)/(max(abs(ShearStress(:)))*Fmax);
+ 
+
+% Buckling in the X-X direction
+Ix = d*(w^3)/12;
+Pab_x = (pi^2)*(Ix)*(E)/(k*lab)^2;
+Pac_x = (pi^2)*(Ix)*(E)/(k*lac)^2;
+Pbc_x = (pi^2)*(Ix)*(E)/(k*lbc)^2;
+Pbd_x = (pi^2)*(Ix)*(E)/(k*lbd)^2;
+Pcd_x = (pi^2)*(Ix)*(E)/(k*lcd)^2;
+Pce_x = (pi^2)*(Ix)*(E)/(k*lce)^2;
+Pde_x = (pi^2)*(Ix)*(E)/(k*lde)^2;
+
+% Buckling in the Y-Y direction
+Iy = (d^3)*(w)/12;
+Pab_y = (pi^2)*(Iy)*(E)/(k*lab)^2;
+Pac_y = (pi^2)*(Iy)*(E)/(k*lac)^2;
+Pbc_y = (pi^2)*(Iy)*(E)/(k*lbc)^2;
+Pbd_y = (pi^2)*(Iy)*(E)/(k*lbd)^2;
+Pcd_y = (pi^2)*(Iy)*(E)/(k*lcd)^2;
+Pce_y = (pi^2)*(Iy)*(E)/(k*lce)^2;
+Pde_y = (pi^2)*(Iy)*(E)/(k*lde)^2;
+
+NormalForces = [Tab Tac Tbd Tce Tde Tbc Tcd];
+BucklingX = [Pab_x Pac_x Pbd_x Pce_x Pde_x Pbc_x Pcd_x];
+BucklingY = [Pab_y Pac_y Pbd_y Pce_y Pde_y Pbc_y Pcd_y];
+
+Pair1 = [BucklingX NormalForces];
+Pair2 = [BucklingY NormalForces];
+
+Fmax1 = (tauavg)/(max(abs(ShearStress(:))));
+Fmax2 = (Soak)/(max(abs(Stress(:))));
+Fmax3 = (min(abs(BucklingX(1:5)))/(min(abs(NormalForces(1:5)))));
+Fmax4 = (min(abs(BucklingY(1:5)))/(min(abs(NormalForces(1:5)))));
+MaxForces = [Fmax1, Fmax2, Fmax3, Fmax4];
+Fmax = min(MaxForces);
+
+if Fmax3 >= Fmax4
+    SFbuckling = (min(abs(BucklingY(1:5)))/(min(abs(NormalForces(1:5)*Fmax))));
+end
+
+if Fmax4 > Fmax3
+    SFbuckling = (min(abs(BucklingX(1:5)))/(min(abs(NormalForces(1:5)*Fmax))));
+end
+
+SFstress = (Soak)/(max(abs(Stress(:)))*Fmax);
+SFshear = (tauavg)/(max(abs(ShearStress(:)))*Fmax);
+
+SFstress
+SFshear
+SFbuckling
+
+SFstresslist = (Soak)./((abs(Stress(:)))*Fmax)
+SFshearlist = (tauavg)./((abs(ShearStress(:)))*Fmax)
+SFbuckling1 = (BucklingX(1))/(Fmax*abs(Tab))
+SFbuckling2 = (BucklingX(3))/(Fmax*abs(Tbd))
+SFbuckling3 = (BucklingX(5))/(Fmax*abs(Tde))
+
+StrengthRatio = Fmax/0.216688
