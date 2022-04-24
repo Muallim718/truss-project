@@ -1,0 +1,307 @@
+\documentclass{article}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{blindtext}
+\usepackage[a4paper, total={6in, 8in}]{geometry}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{setspace} \doublespacing
+
+
+\makeatletter
+
+\newcommand*\curveplus{%
+  \mathbin{\rotatebox[origin=c]{90}{$\m@th\curvearrowleft$}+}}
+
+\newcommand*\rightplus{%
+  \mathpalette\@rightplus\relax}
+\newcommand*\@rightplus[1]{%
+  \mathbin{\vcenter{\hbox{$\m@th\overset{#1+}{\to}$}}}}
+
+\newcommand*\upplus{%
+  \mathbin{+\mathord\uparrow}}
+
+\makeatother
+
+\begin{document}
+\begin{titlepage}
+    \begin{center}
+        \vspace*{1cm}
+            
+        \Huge
+        \textbf{Truss Project Report}
+            
+        \vspace{10cm}
+        \Large
+        {Ishmael Agui, Kwon An, and Muallim Cekic}
+        \\
+        {ENES102 - 0101}
+        \\
+        {A10}
+        \\
+        {Assistant Clinical Professor Aris Cleanthous}
+        \\
+        {April 24, 2022}
+            
+            
+    \end{center}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+
+\section{Introduction}
+\hspace{3mm} The goal of the this truss competition is to design the lightest truss that is supported by rollers at each end to withstand a downward vertical load of $1250lb_{\emph{f}}$ with the greatest strength-weight ratio, while also adhering to design constraints, some of which include having at least 6 members and the height not exceeding 7 inches. To accomplish this objective, we had to determine the maximal force our truss could withstand with the materials provided, namely using a combination of red oak or pine wood and gorilla glue or Elmer’s glue. Once we determined the maximal force our force could handle through either normal stress, buckling, or shear stress, we then determined the safety factors of each force to optimize the design, creating a cost-effective truss that is able to withstand the vertical force of $1250lb_{\emph{f}}$ while simultaneously minimizing on its use of materials. Lastly, in this design, we have chosen to utilize a double load point truss.
+\section{Material Property}
+\hspace{3mm} All provided materials were graciously donated to us by Leidos. The materials we chose were red oak wood with gorilla glue. Red oak wood has a higher modulus of elasticity at 1.8 Mpsi and ultimate tensile strength at 6.8 ksi, whereas pine wood only has a modulus of elasticity of 1.5 Mpsi and a ultimate tensile strength of 5.0 ksi, so choosing red oak and gorilla glue was the ideal choice as it would reduce the chance of the truss failing from buckling or stress. Gorilla glue, similarly, was chosen over Elmer glue because it has a higher average shear strength of 1252 psi as opposed to Elmer’s average shear strength of 1086 psi, thus reducing the chance the truss failing from shear stress. To summarize, our design uses red oak wood with a modulus of elasticity of 1.8 Mpsi, ultimate tensile strength of 6.8 ksi, and gorilla glue with an average shear strength of 1252 psi.
+\newpage
+\section{Technical Engineering Drawing}
+\begin{figure}[ht]
+  \makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{enesdrawing.PNG}}
+\end{figure}
+\hspace{1.5mm} As for the material dimensions, we decided to go with a 22 inch length base and 6 inch height symmetrical design with 7 members, satisfying the design constraint that the total lengths must be between 22 and 23 inches and the height is no greater than 6 inches. Our top member has a length of 11 inches, as it allows us to apply the load in two joints separated by 11 inches. The rest of the lengths and the angles were determined using these inputs and trigonometry.
+\\
+\newpage
+\indent Our width and depth were chosen to be 0.5 inches each with a cross sectional area of 0.25 in${^2}$, allowing us to satisfy the requirements that they both be under 0.75 inches and have a total cross sectional area less than 0.5 inches.
+\begin{figure}[ht]
+  \makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{enestrusss.PNG}}%
+\end{figure}
+\\
+\indent With these considerations in mind, our truss design had these dimension specifications as in the image above, with minimal spacing in between the joints so that the members do not touch each other. The bottom two members had lengths of 10.35 with their triangular sides having lengths 7.13 inches and 7.06 inches. Because of their symmetry, all the triangular members form a 47.49-85.02-47.49 degree triangle. The width and depth remain unchanged at 0.5 inches each.
+\section{Initial Design}
+\subsection{Support Reactions}
+With the drawn free-body diagrams (Refer to the Appendix), equations of equilibrium will be written which will give the support reactions at point A and point E.
+\subsubsection{Sum of Moments}
+$\curveplus \sum M_A = 0
+\\
+\Rightarrow -(\frac{F}{2})(\frac{s}{2}) - (\frac{F}{2})(\frac{3s}{2}) + E_y(2s) = 0
+\\
+\Rightarrow -(\frac{F}{2})(\frac{s}{2}+\frac{3s}{2}) + E_y(2s) = 0
+\\
+\Rightarrow -(\frac{F}{2})(2s) + E_y(2s) = 0
+\\
+\Rightarrow -(F)(s) + E_y(2s) = 0
+\\
+\Rightarrow E_y = \frac{F}{2}
+$
+\subsubsection{Sum of Forces (Y-Direction)}
+$\rightplus \sum F_y = 0
+\\
+\Rightarrow -(\frac{F}{2})-(\frac{F}{2}) + E_y + A_y = 0
+\\
+\Rightarrow A_y = \frac{F}{2}
+$
+\subsection{Internal Forces and Normal Stresses}
+Since the support reactions expressed are known in terms of F, the internal forces which the members experience can now be calculated in terms of F by using method joints. Members BC and CD are zero-force members, thus their internal forces are zero.
+\subsubsection{Calculating Internal Forces and Normal Stresses}
+$ T_{AB} = \frac{-F}{2sin(\theta)}$
+\
+              $ T_{AC} = \frac{Fcos(\theta)}{2sin(\theta)}$
+\
+              $ T_{BC} = 0 $
+\
+              $ T_{BD} = \frac{-Fcos(\theta)}{2sin(\theta)}$
+\
+              $ T_{CD} = 0 $
+\
+              $ T_{CE} = \frac{Fcos(\theta)}{2sin(\theta)} $
+\
+              $ T_{DE} = \frac{-F}{2sin(\theta)}$
+\\
+\\
+Given these equations and the parameters from our initial design, we can now obtaining the following:
+\\
+\
+            $ T_{AB} = -0.6783F$
+\
+            $ T_{AC} = 0.4583F$
+\
+            $ T_{BC} = 0$
+\
+            $ T_{BD} = -0.4583F$
+\
+            $ T_{CD} = 0$
+\
+            $ T_{CE} = 0.4583F$
+\
+            $ T_{DE} = -0.6783F$
+\\
+\\
+From here, using the cross-section area for each link, the normal stress can now be determined in terms of F:
+\\
+\\
+$ \sigma_{AB} = -2.7131F$
+\
+$ \sigma_{AC} = 1.8333F$
+\
+$ \sigma_{BC} = 0$
+\
+$ \sigma_{BD} = -1.8333F$
+\
+$ \sigma_{CD} = 0$
+\
+$ \sigma_{CE} = 1.8333F$
+\
+$ \sigma_{DE} = -2.7131F$
+\\
+\\
+Observing how members AB and DE experience the greatest normal stress, they are thus the control links with respect to normal stress. Using the following equation ($\sigma_{yield} = \sigma_{design}$) and solving for F, it is calculated that F is $2506.3lb_{\emph{f}}$. This force will cause normal stress failure in either members AB or DE.
+
+\subsection{Buckling For Members in Compression}
+By utilizing the internal forces in compression (as denoted by a negative sign) found in the previous section, the critical loads for the members in compression can be determined. 
+\subsubsection{Buckling Calculations for all members in Compression}
+The members in compression are members AB, BD, and DE, so buckling in both directions for these members will be checked using the equation  $P_{CRITICAL}=\frac{\pi^2EI}{(KL)^2} $.
+\\
+\\
+One thing to note is that it is known $I_x=\frac{d(w)^3}{12}$ and $I_y=\frac{w(d)^3}{12}$, but in this unique case, $I_x = I_y$ because both the depth and width of each member are the same. This then means the critical loads in either direction will be equal to one another, as seen below.
+\\
+\\
+Buckling Values in the X-X direction
+\\
+$P_{CR,AB} = 7288.5\:lb_{\emph{f}}$
+\
+$P_{CR,BD} = 3058.8\:lb_{\emph{f}}$
+\
+$P_{CR,DE} = 7288.5\:lb_{\emph{f}}$
+\\
+\\
+Buckling Values in the Y-Y direction
+\\
+$P_{CR,AB} = 7288.5\:lb_{\emph{f}}$
+\
+$P_{CR,BD} = 3058.8\:lb_{\emph{f}}$
+\
+$P_{CR,DE} = 7288.5\:lb_{\emph{f}}$
+\\
+\\
+After obtaining these values, we set each critical load to buckle to the axial force in that link (in terms of F). Setting these two quantities equal to one another, we solve for F for each link and choose the lowest among them; after doing the calculations, the F is $6673.7lb_{\emph{f}}$ --- this F will cause buckling in member BD.
+\\
+
+\subsection{Shear Forces and Shear Stresses}
+\subsubsection{Calculating Shear Forces and Shear Stresses}
+Using the axial force in each link in terms of F, we will calculate the shear stresses using the following equations:
+\\
+\\
+$ \tau_{AB} = \frac{T_{AB}}{2A_{AB_s}}$
+\
+$ \tau_{AC} = \frac{T_{AC}}{2A_{AC_s}}$
+\
+$ \tau_{BC} = \frac{T_{BC}}{2A_{BC_s}}$
+\
+$ \tau_{BD} = \frac{T_{BD}}{2A_{BD_s}}$
+\
+$ \tau_{CD} = \frac{T_{CD}}{2A_{CD_s}}$
+\
+$ \tau_{CE} = \frac{T_{CE}}{2A_{CE_s}}$
+\
+$ \tau_{DE} = \frac{T_{DE}}{2A_{DE_s}}$
+\\
+\\
+The areas seen in the denominators of these equations represent the area in which the glue is in shear with the gusset plate. These areas have been calculated by taking the product of fifteen percent of the length of each member and the width of each member. Although there are two gusset plate areas on each end of the members, they have the same areas so only one derivation for each side was computed.
+\\
+\\
+Moving forward, shear stresses in terms of F with numeric coefficients can now be calculated:
+\\
+\\
+$ \tau_{AB} = -0.6346F$
+\
+$ \tau_{AC} = 0.2952F$
+\
+$ \tau_{BC} = 0$
+\
+$ \tau_{BD} = -0.2778F$
+\
+$ \tau_{CD} = 0$
+\
+$ \tau_{CE} = 0.2952F$
+\
+$ \tau_{DE} = -0.6346F$
+\\
+\\
+Observing how members AB and DE experience the greatest shear stress, they are thus the control links with respect to shear stress. Using the following equation ($\tau_{yield} = \tau_{design}$) and solving for F, it is calculated that F is $1973.0lb_{\emph{f}}$. This force will cause shear stress failure in either members AB and DE.
+\subsection{Failure Mode in Control}
+\subsubsection{Failure Mode in control}
+To determine the failure mode in control, the three different external forces previously calculated (F) will be compared with one another and the lowest of the three will be chosen. In comparing the three different external forces, it can be seen the lowest external force is $1973.0lb_{\emph{f}}$, thus the failure mode in control is shear stress in members AB and DE with a $F_{MAX}$ of $1973.0lb_{\emph{f}}$.
+\subsection{Safety Factors}
+
+Using the following equations, $SF_{stress} = \frac{\sigma_{yield}}{\sigma_{design}}$, $SF_{shear\,stress} = \frac{\tau_{yield}}{\tau_{design}}$, and $SF_{buckling} = \frac{P_{CRITICAL}}{Axial\:Force}$, the safety factors for all failure modes and for all other links will be calculated.
+\subsubsection{Safety Factors for all failure modes}
+(Links AB and DE) \quad \quad \quad $SF_{shear\:stress} = 1.000$
+\\
+(Link BD) \quad \quad \quad \quad \quad \quad \quad $SF_{stress} = 1.2703$
+\\
+(Links AB and DE) \quad \quad \quad $SF_{buckling} = 3.3825$
+\subsubsection{Safety Factors for all other links}
+(Links AC and CE) \quad \quad \quad $SF_{shear\:stress} = 2.1494$
+\\
+(Link BD) \quad \quad \quad \quad \quad \quad \quad $SF_{shear\:stress} = 2.2844$
+\\
+(Links BC and CD) \quad \quad \quad $SF_{shear\:stress} = Infinite$
+\\
+\\
+(Links AC, BD, and CE) \hspace{1.5mm} $SF_{stress} = 1.8799$
+\\
+(Links BC and CD) \quad \quad \quad $SF_{stress} = Infinite$
+\\
+\\
+(Links AB and DE) \quad \quad \quad $SF_{buckling} = 5.4463$
+\\
+\\
+There are safety factors with infinity as a value because these links are associated with zero-force members, and buckling safety factors were only considered for links in compression, links not in compression were neglected.
+\\
+\section{Design Changes}
+    \hspace{3mm} Although our initial design had relatively low safety factors, our safety factors for buckling were greater than 3.00, with 5.4463 for link AB and 3.3825 for link BD, indicating our truss could still be optimized. Since the safety factor of buckling is proportional to the second moment of area, which is proportional to the width and depth of those members, we reduced the width and depth to subsequently reduce the buckling safety factor. The width and depth of our redesigned truss decreased from 0.5 inches to 0.375 inches as a result to create a better designed truss.
+\subsection{New $F_{MAX}$ and failure mode in control}
+    \hspace{3mm} With these new changes, our maximal force decreased from $1973.0lb_{\emph{f}}$ to $1409.8lb_{\emph{f}}$. Also, since the cross sectional area is inversely proportional to the normal stress, the new control failure mode became the normal stress rather than shear stress. The link that will cause the normal stress failure will occur in either links AB and DE. 
+\subsection{New Safety Factors}
+\subsubsection{New Safety Factors for all failure modes}
+(Links AB and DE) \quad \quad \quad $SF_{shear\:stress} = 1.0496$
+\\
+(Link BD) \quad \quad \quad \quad \quad \quad \quad $SF_{stress} = 1.0000$
+\\
+(Links AB and DE) \quad \quad \quad $SF_{buckling} = 1.4978$
+\subsubsection{Safety Factors for all other links}
+(Links AC and CE) \quad \quad \quad $SF_{shear\:stress} = 2.2561$
+\\
+(Link BD) \quad \quad \quad \quad \quad \quad \quad $SF_{shear\:stress} = 2.3978$
+\\
+(Links BC and CD) \quad \quad \quad $SF_{shear\:stress} = Infinite$
+\\
+\\
+(Links AC, BD, and CE) \hspace{1.5mm} $SF_{stress} = 1.4799$
+\\
+(Links BC and CD) \quad \quad \quad $SF_{stress} = Infinite$
+\\
+\\
+(Links AB and DE) \quad \quad \quad $SF_{buckling} = 2.4116$
+\subsection{Strength-Weight Ratio of the Redesigned Truss}
+\hspace{3mm} The strength-weight ratio of the redesigned truss is simply calculated using the following formula: $Strength-Weight \hspace{2mm} Ratio = \frac{F_{max}}{Weight of the Truss}$. Since $F_{max}$ is known and the weight of the truss is approximately $0.216688lb_{\emph{f}}$, this then means the calculated strength-weight ratio is 6506.2.
+\subsection{Comparing Safety Factors}
+\subsubsection{Failure Mode Safety Factors}
+\hspace{3mm} When comparing the original and new safety factors for all failure modes, it can seen the safety factors were heavily optimized. The safety factor for buckling decreased from 3.3825 to 1.4978, and the safety factors for shear stress and normal stress only differ by 0.0496. Thus, all safety factors for all failure modes have been optimized and grouped tightly together as they are in the 1-3 range.
+\subsubsection{Safety Factors for all other links}
+\hspace{3mm} First, we will compare the original and new safety factors for all other links in terms of normal stress. For this comparison, the safety factor for normal stress decreased from 1.8799 to 1.4799 for links AC, BD, and CE.
+\\
+\indent Secondly, we will compare the original and new safety factors for all other links in terms of buckling. For this comparison, the safety factor for normal stress decreased from 5.4463 to 2.4116 for links AB an DE.
+\\
+\indent Lastly, we will compare the original and new safety factors for all other links in terms of shear stress. For this comparison, however, the safety factor for normal stress increased from 2.1494 to 2.2561 for links AC and CE and increased from 2.2844 to 2.3978 for link BD.
+\\
+\indent Ultimately, as described above, the optimization process proved to be successful. The new safety factor for buckling in links AB and DE decreased greatly and the new safety factor for normal stress decreased by 0.40 for links AC, BD and CE. Although the safety factor for shear stress increased approximately by 0.10 for links AC, CE, and BD, the general trend showed that safety factors generally drew closer towards 1.00. Overall, our redesigned truss successfully shows the tightening of safety factors and the optimization of safety factors.
+\section{Final Report Summary}
+\hspace{3mm} Our final determined maximal load is 1,409.8 lbs. The strength-to-weight ratio is determined to be 6506.2. Our predicted failure type and location based on our calculations will occur in either link AB and DE from normal stress.
+\section{Conclusion}
+\hspace{3mm} Our initial truss design utilized a double load configuration with 7 members of a total width of 22 inches and height 6 inches. After we performed the necessary force calculations, we determined that the truss would be able to withstand the applied load of 1250 lb by over 700 lb, with our max force being 1973 lb. In this design our maximal force mode is shear stress in the control link AB. Our safety factors for this design, however, were not ideally optimized, as we had safety factors of 1 for shear stress and 1.2703 for normal stress, but 3.3825 for buckling. 
+\\
+\indent By changing the width and depth for all members to be 0.375 each, we were able to lower all the safety factors to be below 3, with a safety factor of 1 for normal stress, 1.0502 for shear stress, and 1.4978 for buckling. Our new maximal force load is in normal stress, in the control link AB. These design changes also affected our maximal F, reducing it from 1973 lb to 1408 lb. Although these changes significantly lowered our maximal force, our new truss design should still be able to withstand the applied load by an estimated 158 lb.
+\newpage
+\begin{center}
+\section{Appendix}
+\end{center}
+\subsection{Free-Body Diagrams}
+\begin{center}
+\includegraphics[scale = 0.50]{FBDs (7).jpg}
+\end{center}
+\subsection{Matlab Scripts}
+Matlab scripts can be found using the following link: https://github.com/Muallim718/ENES102TrussCalculator
+\end{document}
