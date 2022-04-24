@@ -1,0 +1,81 @@
+%Design 1
+
+%CONSTANTS
+h = 6; F = 1;  w = 0.50; d = 0.50;
+lab = 7.13; lac = 10.35; lbc = 6.598; lbd = 11;
+num = 6; b = 11;
+Soak = 6.8*1000; %found using textbook, red oak
+K = 0.5; %because its fixed-fixed?
+E = 1.8*10^6; %Modulus of Elasticity of oak
+tauavg = 1252; %psi, gathered from doc gorilla glue oak
+
+%SUPPORT REACTIONS
+Ay = F/2; Ey = F/2;
+
+%INTERNAL FORCES & STRESS
+A = w*d;
+theta = atand(h/(b/2));
+Fab = -Ay/sind(theta);
+Fac = -Fab*cosd(theta);
+Fbc = (-Ay-Fab*sind(theta))/sind(theta);
+Fbd = Fab*cosd(theta)-Fbc*cosd(theta);
+Fde = Fab; Fce = Fac; Fcd = Fbc;
+stress = [Fab Fac Fbc Fbd Fcd Fce Fde]./A
+Fstress = Soak/max(abs(stress)) %largest normal stress
+
+%BUCKLING
+lab = 6/sind(theta);
+Iab = 0; 
+if (w < d) 
+    Iab = d*w^3/12; 
+else
+    Iab = w*d^3/12; 
+end
+lbd = 11;
+Ibd = Iab;
+FbuckAB = pi^2*E*Iab/((K*lab)^2*abs(Fab)); %only two (-) are Fab and Fbd
+FbuckBD = pi^2*E*Ibd/((K*lbd)^2*abs(Fbd));
+Fbuckk = [FbuckAB FbuckBD];
+Fbuck = abs(min(Fbuckk)) %BD in this case
+abtrue = 0;
+bdtrue = 0;
+if (Fbuck == FbuckAB) 
+    abtrue = 1;
+elseif (Fbuck == FbuckBD)
+    bdtrue = 1;
+end
+
+%SHEAR
+lab = 7.13; lac = 10.35; lbc = 7.06; lbd = 11;
+Aab = lab*w *.15*2; Aac = lac*w*.15*2; Abc = lbc*w*.15*2; Abd = lbd*w*.15*2;
+Acd = Abc; Ace = Aac; Ade = Aab;
+tauAB = Fab/Aab; tauDE = tauAB;
+tauAC = Fac/Aac; tauCE = tauAC;
+tauBC = Fbc/Abc; tauCD = tauBC;
+tauBD = Fbd/Abd; 
+FshearAB = tauavg/tauAB; %Each link has the same shear force on each side since they have the same areas
+FshearAC = tauavg/tauAC;
+FshearBD = tauavg/tauBD;
+Fshearr = [FshearAB FshearAC FshearBD]
+Fshear = min(abs(Fshearr))
+
+%MAX LOAD
+Farr = [Fstress Fbuck Fshear]
+Fmax = min(Farr) %shear in this case
+
+%SAFETY FACTOR
+newFab = Fab*Fmax; newFac = Fac*Fmax; newFbc = Fbc*Fmax;
+newFbd = Fbd*Fmax; newFcd = Fcd*Fmax; newFce = Fce*Fmax;
+newFde = Fde*Fmax;
+newStress = [newFab newFac newFbc newFbd newFcd newFce newFde]./A
+newShear = [newFab/Aab newFac/Aac newFbc/Abc newFbd/Abd newFcd/Acd newFce/Ace newFde/Ade]
+newFbuckBD = pi^2*E*Iab/((K*lbd)^2);
+newFbuckAB = pi^2*E*Iab/((K*lab)^2);
+SFstress = Soak./max(abs(newStress))
+SFshear = min(abs(tauavg./newShear))
+SFbuck = 0;
+if (abtrue) 
+    SFbuck = min(abs(newFbuckAB/newFab))
+elseif (bdtrue)
+    SFbuck = min(abs(newFbuckBD/newFbd))
+end
