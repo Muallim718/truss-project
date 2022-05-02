@@ -1,6 +1,6 @@
 % Givens
 h = 6; s = 11; F = 1; w = 0.375; d = 0.375; A = w*d;
-lab = 7.126; lac = 10.35; lbc = 6.6; lbd = 11.0;
+lab = 7.13; lac = 10.35; lbc = 6.6; lbd = 11.0;
 lcd = lbc; lde = lab; lce = lac;
 theta = atand((2*h)/s);
 Soak = 6800;
