@@ -99,3 +99,18 @@ SFshearlist = (tauavg)./((abs(ShearStress(:)))*Fmax)
 SFbuckling1 = (BucklingX(1))/(Fmax*abs(Tab))
 SFbuckling2 = (BucklingX(3))/(Fmax*abs(Tbd))
 SFbuckling3 = (BucklingX(5))/(Fmax*abs(Tde))
+
+Vab = lab*w*d;
+Vac = lac*w*d;
+Vbc = lbc*w*d;
+Vbd = lbd*w*d;
+Vcd = lcd*w*d;
+Vce = lce*w*d;
+Vde = lde*w*d;
+Vtot = Vab+Vac+Vbc+Vbc+Vbd+Vcd+Vce+Vde;
+% Ib/in^3
+Density = 0.024;
+WeightTotal = Density*Vtot;
+
+StrengthRatio = Fmax/WeightTotal
+Fmax
