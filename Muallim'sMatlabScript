@@ -99,5 +99,3 @@ SFshearlist = (tauavg)./((abs(ShearStress(:)))*Fmax)
 SFbuckling1 = (BucklingX(1))/(Fmax*abs(Tab))
 SFbuckling2 = (BucklingX(3))/(Fmax*abs(Tbd))
 SFbuckling3 = (BucklingX(5))/(Fmax*abs(Tde))
-
-StrengthRatio = Fmax/0.216688
